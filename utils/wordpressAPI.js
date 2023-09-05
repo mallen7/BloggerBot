@@ -1,41 +1,36 @@
 const axios = require('axios');
+const config = require('../../config.json');  // Adjust the path as needed
+
+const username = config.wordpress.username;
+const password = config.wordpress.password;
+
+async function getJWTToken(website, username, password) {
+  const url = `https://${website}/wp-json/jwt-auth/v1/token`;
+  const data = {
+    username: username,
+    password: password
+  };
+  const response = await axios.post(url, data);
+  return response.data.token;
+}
 
 async function getLastFivePosts(website, token) {
-  try {
-    const response = await axios.get(`https://${website}/wp-json/wp/v2/posts?per_page=5`, {
-      headers: {
-        'Authorization': `Bearer ${token}`
-      }
-    });
-    return response.data;
-  } catch (error) {
-    console.error(`Error fetching posts for ${website}:`, error);
-    return [];
-  }
+  const url = `https://${website}/wp-json/wp/v2/posts?per_page=5`;
+  const headers = { 'Authorization': `Bearer ${token}` };
+  const response = await axios.get(url, { headers });
+  return response.data;
 }
 
 async function createNewPost(website, token, title, content) {
-    const url = `https://${website}/wp-json/wp/v2/posts`;
-    const headers = { 'Authorization': `Bearer ${token}` };
-    const data = {
-      title: title,
-      content: content,
-      status: 'publish'
-    };
-  
-    try {
-      const response = await axios.post(url, data, { headers });
-      return {
-        success: true,
-        data: response.data
-      };
-    } catch (error) {
-      console.error(`Failed to create a new post on ${website}: ${error.message}`);
-      return {
-        success: false,
-        error: error.message
-      };
-    }
-  }
+  const url = `https://${website}/wp-json/wp/v2/posts`;
+  const headers = { 'Authorization': `Bearer ${token}` };
+  const data = {
+    title: title,
+    content: content,
+    status: 'publish'
+  };
+  const response = await axios.post(url, data, { headers });
+  return response.data;
+}
 
-module.exports = { getLastFivePosts, createNewPost };
+module.exports = { getJWTToken, getLastFivePosts, createNewPost };

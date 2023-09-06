@@ -1,6 +1,6 @@
 const OpenAIApi = require('openai');
 
-const openai = new OpenAIApi({ key: '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' });
+const openai = new OpenAIApi({ key: 'OPENAI-API-KEY' });
 
 async function generateBlogPost(context, pastPosts, newsArticles) {
   // Construct the prompt by combining the context, past posts, and news articles

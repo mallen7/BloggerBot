@@ -4,7 +4,7 @@ const generateBlogPost = require('./utils/openaiAPI');
 const fetchRelevantNews = require('./utils/newsAPI');
 const sendEmail = require('./utils/email');
 const config = require('./config.json');  // Adjust the path as needed
-const basicAuth = 'Basic ' + new Buffer(config.wordpress.username + ':' + config.wordpress.password).toString('base64');
+const basicAuth = 'Basic ' + Buffer.from(config.wordpress.username + ':' + config.wordpress.password).toString('base64');
 
 const isDryRun = process.argv.includes('--dry-run');
 

@@ -14,7 +14,7 @@ async function sendEmail(adminEmail, blogContent, articles) {
 
   // Email data
   let mailOptions = {
-    from: 'your-email@fastmail.com',
+    from: 'mallen7@sent.com',
     to: adminEmail,
     subject: 'New Blog Post Created',
     text: `Blog Content: ${blogContent}\n\nArticles Used: ${articles.join(', ')}`

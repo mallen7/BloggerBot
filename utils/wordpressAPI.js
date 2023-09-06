@@ -5,14 +5,14 @@ const basicAuth = 'Basic ' + Buffer.from(config.wordpress.username + ':' + confi
 const username = config.wordpress.username;
 const password = config.wordpress.password;
 
-async function getLastFivePosts(website, token) {
+async function getLastFivePosts(website) {
   const url = `https://${website}/wp-json/wp/v2/posts?per_page=5`;
   const headers = { 'Authorization': basicAuth , 'Content-Type': 'application/json'};
   const response = await axios.get(url, { headers });
   return response.data;
 }
 
-async function createNewPost(website, token, title, content) {
+async function createNewPost(website, title, content) {
   const url = `https://${website}/wp-json/wp/v2/posts`;
   const headers = { 'Authorization': basicAuth , 'Content-Type': 'application/json'};
   const data = {

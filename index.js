@@ -13,6 +13,7 @@ async function main() {
   for (const website of websites) {
     const pastPosts = await getLastFivePosts(website.website_name);
     const newsArticles = await fetchRelevantNews(website.context);
+    console.log("Fetched these news articles:", newsArticles);
     const { title, content } = await generateBlogPost(website.context, pastPosts, newsArticles);
 
     if (!isDryRun) {

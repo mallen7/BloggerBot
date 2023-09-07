@@ -7,11 +7,13 @@ async function fetchRelevantNews(context) {
       q: context,
       language: 'en',
       sortBy: 'relevancy',
-      page: 1
+      page: 3
     });
 
     if (response.status === 'ok') {
-      return response.articles.map(article => article.url);
+      const newsArticles = response.articles.map(article => article.url);
+      console.log("Fetched news articles:", newsArticles);
+      return newsArticles;
     } else {
       console.error('Failed to fetch news:', response.status);
       return [];
